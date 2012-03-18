@@ -27,7 +27,17 @@ If your copy of SFML is not in the standard location, you
 should be able to pass cmake the location of it like this:
 cmake -DSFMLDIR=/path/to/SFML-1.6
 
-I have not yet been verified this, though.
+* Building with MinGW32 for Windows
+First, ensure you have a working copy of MinGW and CMake and SFML. You
+probably want all of these included in the PATH of the user that will
+build and run the code.
 
-* Building on other operating systems
-Build instructions for other operating systems might be useful.
+With MinGW, building is similar to how it is done on GNU/Linux. Mostly
+it just becomes necessary to specify the generator type for CMake, and
+some binary names are different. Also you quite certainly will need to
+specify the SFMLDIR variable in the cmake command.
+
+  mkdir build
+  cd build
+  cmake -G "MinGW Makefiles" "-DSFMLDIR=C:\SFML-1.6-mingw32\lib" ..
+  mingw32-make
