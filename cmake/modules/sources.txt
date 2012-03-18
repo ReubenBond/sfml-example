@@ -1,0 +1,2 @@
+FindSFML.cmake:
+https://raw.github.com/LaurentGomila/SFML/master/cmake/Modules/FindSFML.cmake
