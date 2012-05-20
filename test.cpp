@@ -13,48 +13,53 @@ namespace {
   std::string float2str(float in);
 }
 
-int main(int argc, char **argv)
+int main(int, char **argv)
 {
   sf::RenderWindow win(sf::VideoMode(800, 600), argv[0]);
-  win.UseVerticalSync(true);
+  win.setVerticalSyncEnabled(true);
   //win.SetFramerateLimit(100);
 
   const sf::Color red(255,0,0);
-  const sf::Font &font = sf::Font::GetDefaultFont();
+  const sf::Font &font = sf::Font::getDefaultFont();
 
-  sf::String rotStr;
-  rotStr.SetPosition(600,500);
+  sf::Text rotStr;
+  rotStr.setPosition(600, 500);
+  rotStr.setFont(font);
 
-  sf::Shape triangle;
-  triangle.AddPoint( 100.0,   0.0, red);
-  triangle.AddPoint( -50.0,  50.0, red);
-  triangle.AddPoint( -50.0, -50.0, red);
 
-  triangle.SetPosition(200,200);
+  sf::ConvexShape triangle;
+  triangle.setPointCount(3);
+  triangle.setPoint(0, {100.0,   0.0});
+  triangle.setPoint(1, {-50.0,  50.0});
+  triangle.setPoint(2, {-50.0, -50.0});
+  triangle.setOutlineThickness(5);
+  triangle.setOutlineColor(red);
+  triangle.setPosition(200, 200);
+  triangle.setFillColor(sf::Color::Blue);
 
-  while (win.IsOpened()) {
+  while (win.isOpen()) {
     sf::Event ev;
 
     /* Exhaust the event queue */
-    while (win.GetEvent(ev)) {
-      if (ev.Type == sf::Event::Closed) {
-        win.Close();
+    while (win.pollEvent(ev)) {
+      if (ev.type == sf::Event::Closed) {
+        win.close();
       }
     }
 
     /* Update objects */
-    triangle.Rotate(0.1);
+    triangle.rotate(3.8);
 
-    const std::string rot = "Rot: " + float2str(triangle.GetRotation());
-    rotStr.SetText(rot.c_str());
+    const std::string rot = "Rot: " + float2str(triangle.getRotation());
+    rotStr.setString(rot.c_str());
 
     /* Begin drawing stuff */
-    win.Clear();
+    win.clear();
 
-    win.Draw(triangle);
-    win.Draw(rotStr);
+    win.draw(triangle);
+    win.draw(rotStr);
 
-    win.Display();
+    win.display();
   }
 
   return 0;
